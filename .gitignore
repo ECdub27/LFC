@@ -23,3 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 src/store/apiSlice.ts
+src/myBackend/server.ts
+src/myBackend/server.js

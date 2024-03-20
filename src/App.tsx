@@ -1,10 +1,21 @@
-import { useState } from 'react'
+
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import CardOneLFCTeamStats from './Components/CardOne'
+
+export type AppProps = {
+  team_id: number;
+  name: string; 
+  logo: string;
+  founded: number;
+  venue_name: string;
+  venue_address: string;
+  venue_capacity: number;
+}
 
 function App() {
-  const [count, setCount] = useState(0)
+
 
   return (
     <>
@@ -20,12 +31,9 @@ function App() {
        top half of page 
        <div className='card-parent-container'>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
+      
+        <CardOneLFCTeamStats team_id={0} name={''} logo={''} founded={0} venue_name={''} venue_address={''} venue_capacity={0}  />
+        
       </div>
      <div className="card-2">
           card from another component here 
