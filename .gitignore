@@ -25,3 +25,6 @@ dist-ssr
 src/store/apiSlice.ts
 src/myBackend/server.ts
 src/myBackend/server.js
+sensitve.env
+src/sensitive.env
+src/myBackend/package-lock.json

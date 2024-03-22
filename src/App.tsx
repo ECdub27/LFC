@@ -32,7 +32,7 @@ function App() {
        <div className='card-parent-container'>
       <div className="card">
       
-        <CardOneLFCTeamStats team_id={0} name={''} logo={''} founded={0} venue_name={''} venue_address={''} venue_capacity={0}  />
+        <CardOneLFCTeamStats  team_id={40} name={''} logo={''} founded={0} venue_name={''} venue_address={''} venue_capacity={0}  />
         
       </div>
      <div className="card-2">
