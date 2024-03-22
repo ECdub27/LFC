@@ -42,7 +42,7 @@ const options = {
   url: 'https://api-football-v1.p.rapidapi.com/v3/teams',
   params: {id: '40'},
   headers: {
-    'X-RapidAPI-Key': '520e90366amshb87041674d2101ep118f40jsn1ef168340c42',
+    'X-RapidAPI-Key': `${api_key}`,
     'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
     'Content-Type': 'application/json',
   }, 
