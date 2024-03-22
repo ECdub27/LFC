@@ -28,3 +28,4 @@ src/myBackend/server.js
 sensitve.env
 src/sensitive.env
 src/myBackend/package-lock.json
+src/myBackend/index.ts
