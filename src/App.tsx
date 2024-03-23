@@ -2,7 +2,10 @@
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
-import CardOneLFCTeamStats from './Components/CardOne'
+import CardOneLFCTeamStats from './Components/CardOne';
+import CardThree from './Components/CardThree';
+import CardTwo from './Components/CardTwo';
+import CardFour from './Components/CardFour';
 
 export type AppProps = {
   team_id: number;
@@ -32,22 +35,29 @@ function App() {
        <div className='card-parent-container'>
       <div className="card">
       <h2 className='card-title'>Team Stats</h2>
-        <CardOneLFCTeamStats team_id={0} name={''} logo={''} founded={0} venue_name={''} venue_address={''} venue_capacity={0} />
+        <CardOneLFCTeamStats team_id={40} name={'Liverpool'} logo={''} founded={0} venue_name={'Anfield'} venue_address={''} venue_capacity={0}  /> 
         <div>
         </div>
       </div>
      <div className="card-2">
          <h2 className='card-title2'>Squad Information</h2> 
-        
+        <CardTwo />
      </div>
-
+      
      <div className="card-3">
           <h2 className='card-title3'> Squad Fixtures</h2>
-        
+        <CardThree />
      </div>
+
+    
+    
      <div className='card-4'>
        <h2 className='card-title4'>Squads Stats</h2>
+       <CardFour />
      </div>
+     <main>
+
+     </main>
       </div>
     </>
   )

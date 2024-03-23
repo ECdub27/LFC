@@ -1,7 +1,6 @@
 import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import fetch from 'node-fetch';
 import axios from 'axios';
 import asyncHandler from 'express-async-handler';
 import { stringify } from 'flatted';
@@ -60,7 +59,7 @@ app.get('/api/LFCStats',  cors(), asyncHandler( async (req, res) => {
      try {
         const response = await axios.request(options)
         console.log(response.data)
-        const circularSafeResponse = stringify(response.data);
+        const circularSafeResponse = stringify(response.data.team.venue);
            res.status(200).send(circularSafeResponse);
     } catch (error) {
         console.error(error);
@@ -69,43 +68,74 @@ app.get('/api/LFCStats',  cors(), asyncHandler( async (req, res) => {
 }));
 
 
-app.get('/api/LFCInformation', cors(),  (_req, res) => {
-   const allLFCInformation = fetch('api-football-v1.p.rapidapi.com/v2/teams/team/40', {
-        headers:{
-            'X-RapidAPI-Key': `${api_key}`,
-            'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
-            'Content-Type': 'application/json',
-        } as Record<string, string>,
-    }).then((res: { json: () => unknown; }) => res.json());
-   
-   return res.send({allLFCInformation});
-});
+app.get('/api/LFCInformation', cors(), asyncHandler( async (_req, res) => {
+    const options = {
+        method: 'GET',
+  url: 'https://api-football-v1.p.rapidapi.com/v3/coaches',
+  params: {team: '40'},
+  headers: {
+    'X-RapidAPI-Key': `${api_key}`,
+    'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+  }
+      };
+      
+      try {
+          const response = await axios.request(options);
+          console.log(response.data);
+          const circularSafeResponse = stringify(response.data.team.venue);
+           res.status(200).send(circularSafeResponse);
+      } catch (error) {
+          console.error(error);
+      }
+}));
 
 
-app.get('/api/LFCFixuturesById', cors(),  (req, res) => {
-    const id = req.query.id;
-    const allLFCFixuturesById = fetch(`api-football-v1.p.rapidapi.com/v2/fixtures/id/${id}?timezone=Europe%2FLondon`, {
-        headers:{
-            'X-RapidAPI-Key': `${api_key}`,
-            'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
-            'Content-Type': 'application/json',
-        } as Record<string, string>,
-    }).then((res: { json: () => unknown; }) => res.json());
-    return res.send({allLFCFixuturesById});
-});
+app.get('/api/LFCFixuturesById', cors(),asyncHandler (async  (req, res) => {
+    const options = {
+        method: 'GET',
+        url: 'https://api-football-v1.p.rapidapi.com/v3/fixtures',
+        params: {live: 'all'},
+        headers: {
+          'X-RapidAPI-Key': `${api_key}`,
+          'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+        }
+      };
+      
+      try {
+          const response = await axios.request(options);
+          console.log(response.data);
+          const circularSafeResponse = stringify(response.data.team.venue);
+           res.status(200).send(circularSafeResponse);
+      } catch (error) {
+          console.error(error);
+      }
+}));
 
-app.get('/api/LFCPlayersStats', cors(),  (_req, res) => {
+app.get('/api/LFCPlayersStats', cors(),  asyncHandler( async (req, res) => {
+ 
+    const options = {
+        method: 'GET',
+        url: 'https://api-football-v1.p.rapidapi.com/v3/players',
+        params: {
+          team: '40',
+          season: '2023'
+        },
+        headers: {
+          'X-RapidAPI-Key': `${api_key}`,
+          'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
+        }
+      };
 
-    const playerStats = fetch('api-football-v1.p.rapidapi.com/v2/players/team/40',{
-        headers:{
-            'X-RapidAPI-Key': `${api_key}`,
-            'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
-            'Content-Type': 'application/json',
-        } as Record<string, string>,
-    }).then((res: { json: () => unknown; }) => res.json());
+    try {
+        const response = await axios.request(options);
+        console.log(response.data);
+        const circularSafeResponse = stringify(response.data.team.venue);
+           res.status(200).send(circularSafeResponse);
+    } catch (error) {
+        console.error(error);
+    }
 
-    return res.send({playerStats});
-    });
+}));
 
 
     

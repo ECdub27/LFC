@@ -3,7 +3,17 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+ 
+}
+
+html{
+  background-color:  rgba(255, 255, 255, 0.2);
   
+}
+
+
+main{
+  background-color: #911712;
 }
 /* ... 
 color themes 
@@ -102,5 +112,5 @@ color themes
   color: #888;
 }
 h1{
-  color: rgba(255, 255, 255, 0.88);
+  color:whitesmoke;
 }
