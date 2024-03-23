@@ -1,13 +1,14 @@
 import * as dotenv from 'dotenv';
-import express, { response } from 'express';
+import express from 'express';
 import cors from 'cors';
 import fetch from 'node-fetch';
 import axios from 'axios';
 import asyncHandler from 'express-async-handler';
+import { stringify } from 'flatted';
 
-
-
+if(process.env.NODE_ENV !== 'production'){
 dotenv.config();
+}
 const app = express();
 
 const api_key = process.env.API_KEY;
@@ -37,6 +38,7 @@ app.get("/cors", (_req, res) =>{
 
 
 
+
 const options = {
   method: 'GET',
   url: 'https://api-football-v1.p.rapidapi.com/v3/teams',
@@ -57,13 +59,15 @@ app.get('/api/LFCStats',  cors(), asyncHandler( async (req, res) => {
    
      try {
         const response = await axios.request(options)
-        res.send(response.data);
-        console.log(JSON.stringify(response.data.response[0]));
+        console.log(response.data)
+        const circularSafeResponse = stringify(response.data);
+           res.status(200).send(circularSafeResponse);
     } catch (error) {
         console.error(error);
     }
-     res.json(response);
+    
 }));
+
 
 app.get('/api/LFCInformation', cors(),  (_req, res) => {
    const allLFCInformation = fetch('api-football-v1.p.rapidapi.com/v2/teams/team/40', {

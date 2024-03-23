@@ -10,7 +10,7 @@ color themes
 --theme-ui-colors-black: #0c0c0c;
   --theme-ui-colors-white: #fff;
   --theme-ui-colors-white100: rgba(255, 255, 255, 0.88);
-  --theme-ui-colors-white200: rgba(255, 255, 255, 0.4);
+  --theme-ui-colors-white200: rgba(255, 255, 255, 0.4); Greyish
   --theme-ui-colors-white300: rgba(255, 255, 255, 0.2);
   --theme-ui-colors-red50: #FFEFEF;
   --theme-ui-colors-red100: #DC0714;
@@ -51,6 +51,10 @@ color themes
   align-items:flex-start;
   height: 200px;
 }
+.card-title .card-2 .card-3 .card-4{
+  color: rgba(255, 255, 255, 0.88);
+}
+
 .card {
   padding: 2em;
   background-color: #911712;

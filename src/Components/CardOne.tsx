@@ -2,8 +2,8 @@
 import { useGetLFCStatsQuery } from "../store/apiSlice";
 import { AppProps } from "../App";
 import React from "react";
-import {useState, useEffect} from 'react';
-import './CardOne.css';
+import './StyleCard.css';
+
 type APIProps = {
 venue: string;
 teams: [];
@@ -23,51 +23,46 @@ api: object;
 
 
 const CardOneLFCTeamStats:React.FC<AppProps>= ():JSX.Element => {
-   
-    const {data, error, isLoading, isSuccess} = useGetLFCStatsQuery(''); 
-    const [teamInfo, setTeamInfo] = useState<APIProps[]>([]);
-
     
-
-
-    
-useEffect(() =>{
-
-console.log(data);
-setTeamInfo(data);
-
-
-},[teamInfo, data, isSuccess, isLoading, error]);
+    const { data = [], error, isLoading } = useGetLFCStatsQuery('', {
+        selectFromResult: ({ data, isLoading, error }) => ({
+            data: data,
+            isLoading: isLoading,
+            error: error,
+        }),
+        refetchOnMountOrArgChange: true,
+    });
 
    
     return (
 
 <div className="card-title">
    
-    <h2>Team Stats</h2>
+    
     {error ? (
-    <>
-    oh no theres an error
-    </>
+        <>
+            oh no theres an error
+        </>
     ) : isLoading ? (
         <>
-        loading...
+            loading...
         </>
-        ) : data && isSuccess ? (
-            <>
-            {data.response[0].map((team:APIProps) => (
-                <div className="card" key={team.team_id}>
-                    <h2>{team.name}</h2>
-                    <img src={team.logo} alt="team logo" />
-                    <p>Founded: {team.founded}</p>
-                    <p>Venue: {team.venue_name}</p>
-                    <p>Address: {team.venue}</p>
-                    <p>Capacity: {team.venue}</p>
-                </div>
+    ) : (data) ? (
+        <>
             
-            ))}
-                
-            </> ): null}
+                {Array.isArray(data) && data.map((team: APIProps) => (
+                    <div className="card" key={team.team_id}>
+                        <h2>{team.name}</h2>
+                        <img src={team.logo} alt="team logo" />
+                        <p>Founded: {team.founded}</p>
+                        <p>Venue: {team.venue_name}</p>
+                        <p>Address: {team.venue}</p>
+                        <p>Capacity: {team.capacity}</p>
+                    </div>
+                ))}
+            
+        </>
+    ) : null}
 
                        
 

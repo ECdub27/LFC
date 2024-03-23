@@ -15,7 +15,7 @@ export type AppProps = {
 }
 
 function App() {
-
+ 
 
   return (
     <>
@@ -31,21 +31,22 @@ function App() {
        top half of page 
        <div className='card-parent-container'>
       <div className="card">
-      
-        <CardOneLFCTeamStats  team_id={40} name={''} logo={''} founded={0} venue_name={''} venue_address={''} venue_capacity={0}  />
-        
+      <h2 className='card-title'>Team Stats</h2>
+        <CardOneLFCTeamStats team_id={0} name={''} logo={''} founded={0} venue_name={''} venue_address={''} venue_capacity={0} />
+        <div>
+        </div>
       </div>
      <div className="card-2">
-          card from another component here 
+         <h2 className='card-title2'>Squad Information</h2> 
         
      </div>
 
      <div className="card-3">
-          card from another component here 
+          <h2 className='card-title3'> Squad Fixtures</h2>
         
      </div>
      <div className='card-4'>
-        card from another component here
+       <h2 className='card-title4'>Squads Stats</h2>
      </div>
       </div>
     </>
