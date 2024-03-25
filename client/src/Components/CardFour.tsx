@@ -1,16 +1,17 @@
 
-import { useGetLFCFixuturesByIdQuery } from "../store/apiSlice";
+import { useGetLFCPlayersStatsQuery } from "../store/apiSlice";
 import { APIProps } from "./CardOne";
-
-
-const CardThree = () => {
-
-const {data, isLoading, error } = useGetLFCFixuturesByIdQuery('')
+const CardFour = () => {
+ const {data, isLoading, error } = useGetLFCPlayersStatsQuery('',{
+    refetchOnReconnect: true,
+    refetchOnFocus: true,
+})
+ 
     return (
     <div className='card-title'>
     
     
-    <h1>LFC Fixtures</h1>
+    <h1>LFC Player Stats</h1>
     
     
     {error ? (
@@ -24,17 +25,16 @@ const {data, isLoading, error } = useGetLFCFixuturesByIdQuery('')
     ) : (data) ? (
         <>
             
-                { data.map((team: APIProps) => (
+                {data.response && data.response.map((team: APIProps) => (
                     <div className="card" key={team.team_id}>
                         <h2>{team.name}</h2>
+                        <p>{team.season}</p>
                         <img src={team.logo} alt="team logo" />
                         <ul>
                             <li>
-                        <p>Founded: {team.founded}</p>
-                        <p>Venue: {team.venue_name}</p>
-                        <p>Address: {team.venue}</p>
-                        <p>Capacity: {team.capacity}</p>
-                        </li>
+                                <p>Player: {String(team.player)}</p>
+                                <p>stats: {team.statistics}</p>
+                            </li>
                         </ul>
                     </div>
                 ))}
@@ -52,4 +52,4 @@ const {data, isLoading, error } = useGetLFCFixuturesByIdQuery('')
     
     };
     
-    export default CardThree;
+    export default CardFour;

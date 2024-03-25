@@ -1,11 +1,14 @@
 
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
+import { Player, Controls } from '@lottiefiles/react-lottie-player';
+
 import './App.css'
 import CardOneLFCTeamStats from './Components/CardOne';
 import CardThree from './Components/CardThree';
 import CardTwo from './Components/CardTwo';
 import CardFour from './Components/CardFour';
+import { useEffect, useState,useRef } from 'react';
 
 export type AppProps = {
   team_id: number;
@@ -18,11 +21,34 @@ export type AppProps = {
 }
 
 function App() {
- 
+ const [LFC, setLFC] = useState<AppProps[]>([]);
+const container = useRef<HTMLDivElement>(null);
 
+useEffect(() => {
+  
+
+  fetch('http://localhost:3000')
+    .then(response => response.json())
+    .then(data => setLFC(data))
+}, []);
   return (
     <>
-      <div >
+      <div id='animation-container' ref={container}>
+
+      <Player
+  autoplay
+  loop
+  src="client/src/Animation - 1711399486243.json"
+  style={{ height: '300px', width: '300px' }}
+>
+  <Controls visible={true} buttons={['play', 'repeat', 'frame', 'debug']} />
+</Player>
+        {LFC.map((item) => (
+          <div key={item.team_id}>
+            <h3>{item.name}</h3>
+            {/* Render other properties of the item */}
+          </div>
+        ))}
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
@@ -31,11 +57,11 @@ function App() {
         </a>
       </div>
       <h1>You Will Never Walk Alone</h1>
-       top half of page 
+      
        <div className='card-parent-container'>
       <div className="card">
       <h2 className='card-title'>Team Stats</h2>
-        <CardOneLFCTeamStats team_id={40} name={'Liverpool'} logo={''} founded={0} venue_name={'Anfield'} venue_address={''} venue_capacity={0}  /> 
+        <CardOneLFCTeamStats /> 
         <div>
         </div>
       </div>

@@ -2,7 +2,10 @@ import { useGetLFCInformationQuery } from "../store/apiSlice";
 import { APIProps } from "./CardOne";
 
 const CardTwo = () => {
-const {data, isLoading, error } = useGetLFCInformationQuery('')
+const {data, isLoading, error } = useGetLFCInformationQuery('',{
+    refetchOnReconnect: true,
+    refetchOnFocus: true,
+})
 
 return (
 <div className='card-title'>
@@ -21,7 +24,7 @@ return (
     ) : (data) ? (
         <>
             
-                { data.map((team: APIProps) => (
+                {data && data.response.map((team: APIProps) => (
                     <div className="card" key={team.team_id}>
                         <h2>{team.name}</h2>
                         <img src={team.logo} alt="team logo" />
