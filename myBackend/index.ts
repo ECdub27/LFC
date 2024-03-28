@@ -1,26 +1,18 @@
-import * as dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import axios from 'axios';
-import asyncHandler from 'express-async-handler';
-import { stringify,parse } from 'flatted';
+import {config} from 'dotenv';
 import path from 'path';
+import asyncHandler from 'express-async-handler';
 
-if(process.env.NODE_ENV !== 'production'){
-dotenv.config();
-}
-const app = express();
-const api_key = process.env.API_KEY;
+config({ path: path.resolve(__dirname, 'sensitive.env') });
 const PORT = process.env.PORT || 3000;
-app.use(express.static('public'));
-app.use(express.json());  
-app.use(express.urlencoded({ extended: true }));  
-app.use(cors({
-  methods: 'GET,POST,PATCH,DELETE,OPTIONS',
-    origin: 'https://localhost:3000',
-}));
+const api = process.env.API_KEY;
 
+const app = express();
+app.use(cors());
 app.options('*', cors());
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 
 
@@ -45,10 +37,10 @@ app.get("/cors", (_req, res) =>{
 
 const options = {
   method: 'GET',
-  url: 'https://api-football-v1.p.rapidapi.com/v3/teams',
+  // url: 'https://api-football-v1.p.rapidapi.com/v3/teams',
   params: {id: '40'},
   headers: {
-    'X-RapidAPI-Key': api_key,
+    'X-RapidAPI-Key': `${api}`,
     'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
     'Content-Type': 'application/json',
   }, 
@@ -61,98 +53,127 @@ const options = {
 
 
 
-app.get('/api/LFCStats',  asyncHandler( async (req, res) => {
-  let circularSafeResponse;
+app.get('/api/LFCStats', cors(), asyncHandler( async (_req, res) => {
+  const url = 'https://api-football-v1.p.rapidapi.com/v3/teams'
     
      try {
-        const response = await axios.request(options)
-        console.log(response.data)
-        const circularSafeResponse =  parse(stringify(response.data));
-           return circularSafeResponse;
+      const response = await fetch(url, options).then((response) => {
+        if(response.ok){
+          return response.json();
+        }
+      }).then((data) => {
+        console.log(data);
+      })
+      return response;
+      
     } catch (error) {
-        console.error(error);
+        if(error instanceof Error){
+          res.status(500).send(error);
+          console.log(error);
+        }
+       
     }
-    return  res.status(200).send(circularSafeResponse);
+
 }));
 
 
 app.get('/api/LFCInformation', asyncHandler( async (_req, res) => {
- let circularSafeResponse;
+ const url = 'https://api-football-v1.p.rapidapi.com/v2/coachs/coach/1';
    
     const options = {
         method: 'GET',
-  url: 'https://api-football-v1.p.rapidapi.com/v2/coachs/coach/1',
-  params: {team: '40'},
-  headers: {
-    'X-RapidAPI-Key': api_key,
+       params: {team: '40'},
+       headers: {
+    'X-RapidAPI-Key': `${api}`,
     'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
   }
       };
       
       try {
-          const response = await axios.request(options);
-          console.log(response.data);
-          circularSafeResponse = parse(stringify(response.data));
-          return circularSafeResponse;
+          const response = await fetch(url, options).then((response) =>{
+            if(response.ok){
+              return response.json();
+            }
+          }).then((data) =>{
+            console.log(data);
+
+          });
+          return response;
       } catch (error) {
-          console.error(error);
+        if(error instanceof Error){
+          res.status(500).send(error);
+          console.log(error);
+        }
       }
       
-      return  res.status(200).send(circularSafeResponse);
+      
 }));
 
 
 app.get('/api/LFCFixuturesById',asyncHandler (async  (req, res) => {
-  let circularSafeResponse;
+  const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures'
     
    
     const options = {
         method: 'GET',
-        url: 'https://api-football-v1.p.rapidapi.com/v3/fixtures',
         params: {live: 'all'},
         headers: {
-          'X-RapidAPI-Key': api_key,
+          'X-RapidAPI-Key': `${api}`,
           'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
         }
       };
       
       try {
-          const response = await axios.request(options);
-          console.log(response.data);
-          const circularSafeResponse =  parse(stringify(response.data));
-          
-          return circularSafeResponse;
+          const response = await fetch(url, options).then((response) =>{
+            if(response.ok){
+              return response.json();
+
+            }
+          }).then((data) =>{
+            console.log(data);
+          })
+          return response;
       } catch (error) {
-          console.error(error);
+        if(error instanceof Error){
+          res.status(500).send(error);
+          console.log(error);
+        }
       }
-      return  res.status(200).send(circularSafeResponse);
+      
 }));
 
 app.get('/api/LFCPlayersStats',   asyncHandler( async (req, res) => {
-  let circularSafeResponse;
+  const url = 'https://api-football-v1.p.rapidapi.com/v3/players';
   
     const options = {
         method: 'GET',
-        url: 'https://api-football-v1.p.rapidapi.com/v3/players',
         params: {
           team: '40',
           season: '2023'
         },
         headers: {
-          'X-RapidAPI-Key': api_key,
+          'X-RapidAPI-Key':  `${api}`,
           'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
         }
       };
 
     try {
-        const response = await axios.request(options);
-        console.log(response.data);
-        const circularSafeResponse =  parse(stringify(response.data));
-         return circularSafeResponse;
+        const response = await fetch(url,options).then((response) =>{
+          if(response.ok){
+            return response.json();
+          }
+        }).then((data) =>{
+          console.log(data);
+        })
+        return response;
+        
     } catch (error) {
-        console.error(error);
+      if(error instanceof Error){
+        res.status(500).send(error);
+        console.log(error);
+      }
     }
-    return  res.status(200).send(circularSafeResponse);
+    
 }));
 
 app.get('*', cors(), (_req, res) => {

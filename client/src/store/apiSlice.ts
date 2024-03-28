@@ -2,7 +2,7 @@ import {   createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 // 1.) add proxy with local host, useSt, useE, fetch with query params 
 type APIProps = {
-    response: any;
+    response: unknown;
     map(arg0: unknown): unknown;
     venue: string;
     teams: [];
@@ -23,7 +23,8 @@ type APIProps = {
  export const apiSlice = createApi({
     reducerPath:"footyAPI",
     baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:3000/',
-// and cors and 
+    mode: 'cors',
+    credentials: "same-origin",
 prepareHeaders:(headers) =>{
     const accessToken = localStorage.getItem('access_token');
     if(accessToken){
@@ -37,10 +38,9 @@ tagTypes:['LFCStats', 'LFCInformation', 'LFCFixuturesById', 'LFCPlayersStats'],
         getLFCStats: builder.query<APIProps, string>({
             query: () =>  'api/LFCStats',
             providesTags: ['LFCStats'],  
-           
-            }),
+        }),
             getLFCInformation: builder.query({
-                query: () => 'api/LFCInformation',
+                query: () =>  'api/LFCInformation',
                 providesTags: ['LFCInformation'],
                 
             }),
@@ -54,7 +54,7 @@ tagTypes:['LFCStats', 'LFCInformation', 'LFCFixuturesById', 'LFCPlayersStats'],
           }),
           
        }),
-      
+       
 });
 
        
@@ -67,4 +67,4 @@ tagTypes:['LFCStats', 'LFCInformation', 'LFCFixuturesById', 'LFCPlayersStats'],
     
 
 
-export const { useGetLFCStatsQuery,useGetLFCInformationQuery,useGetLFCFixuturesByIdQuery, useGetLFCPlayersStatsQuery } = apiSlice;
+export const { useGetLFCStatsQuery, useLazyGetLFCStatsQuery, useGetLFCInformationQuery,useGetLFCFixuturesByIdQuery, useGetLFCPlayersStatsQuery } = apiSlice;

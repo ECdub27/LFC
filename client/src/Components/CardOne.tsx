@@ -2,7 +2,7 @@
 import { useGetLFCStatsQuery } from "../store/apiSlice";
 import React, { ReactNode } from "react";
 import './StyleCard.css';
-import { useEffect} from 'react';
+import { useEffect,useState} from 'react';
 
 export type APIProps = {
 season: ReactNode;
@@ -24,7 +24,7 @@ venue_capacity: number;
 address:[key: string, value: string];
 capacity:number;
 api: object;
-data: object;
+data: Array<object>;
 response: Array<{
     team_id: number;
     name: string;
@@ -43,21 +43,18 @@ events:Array<[]>;
 
 
 
-const CardOneLFCTeamStats:React.FC = ():JSX.Element => {
+
+const CardOneLFCTeamStats:React.FC= ():JSX.Element => {
+    const [lfcInformation, setLFCInformation] = useState(true);
+   
+    const {data, error, isLoading} = useGetLFCStatsQuery('', {
+        skip:lfcInformation,
+    });
+
     
-    const { data, error, isLoading, isSuccess } = useGetLFCStatsQuery('',{
-    refetchOnReconnect: true,
-    refetchOnFocus: true,
-});
-
     useEffect(() => {
-        console.log(data);
-
-        if (isSuccess) {
-            return;
-            
-        }
-    }, [isSuccess, data]);
+       
+    }, [data]);
 
     return (
 
@@ -69,14 +66,16 @@ const CardOneLFCTeamStats:React.FC = ():JSX.Element => {
     {error ? (
         <>
             oh no theres an error
+            {error}
+            
         </>
     ) : isLoading ? (
         <>
             loading...
         </>
-    ) : (data ) ? (
+    ) : (data && JSON.stringify(data) ) ? (
         <>
-            {data.response && data.response.map((team: APIProps) => (
+            {data&& data.map((team: APIProps) => (
                 <div className="card" key={team.team_id}>
                     <h2>{team.name}</h2>
                     <img src={team.logo} alt="team logo" />
@@ -89,11 +88,12 @@ const CardOneLFCTeamStats:React.FC = ():JSX.Element => {
                         </li>
                     </ul>
                 </div>
+                
             ))}
         </>
     ) : null}
 
-                    
+<button onClick={() => setLFCInformation(false)}>Fetch Stats</button>        
 
 </div>
 

@@ -8,7 +8,7 @@ import CardOneLFCTeamStats from './Components/CardOne';
 import CardThree from './Components/CardThree';
 import CardTwo from './Components/CardTwo';
 import CardFour from './Components/CardFour';
-import { useEffect, useState,useRef } from 'react';
+import { useRef } from 'react';
 
 export type AppProps = {
   team_id: number;
@@ -21,16 +21,10 @@ export type AppProps = {
 }
 
 function App() {
- const [LFC, setLFC] = useState<AppProps[]>([]);
+ 
 const container = useRef<HTMLDivElement>(null);
 
-useEffect(() => {
-  
 
-  fetch('http://localhost:3000')
-    .then(response => response.json())
-    .then(data => setLFC(data))
-}, []);
   return (
     <>
       <div id='animation-container' ref={container}>
@@ -43,12 +37,7 @@ useEffect(() => {
 >
   <Controls visible={true} buttons={['play', 'repeat', 'frame', 'debug']} />
 </Player>
-        {LFC.map((item) => (
-          <div key={item.team_id}>
-            <h3>{item.name}</h3>
-            {/* Render other properties of the item */}
-          </div>
-        ))}
+        
         <a href="https://vitejs.dev" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
