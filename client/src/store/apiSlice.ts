@@ -17,16 +17,14 @@ prepareHeaders:(headers) =>{
     }   
     return headers;
 } }),
-tagTypes:['LFCStats', 'LFCInformation', 'LFCFixuturesById', 'LFCPlayersStats'],
+tagTypes:['LFCStats'],
 
     endpoints: (builder) => ({
         getLFCStats: builder.query({
             query: () => 'api/LFCStats',
-            }),
-     
-
-          
-       }),
+            invalidatesTags: undefined,
+        }),
+    }),
        
 });
 

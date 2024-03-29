@@ -56,10 +56,10 @@ const {data:teamFixtures, isLoading, error } = useGetLFCStatsQuery('')
                         <ul>
                             <li>
                                 <span>{team.fixture}</span> 
-                                <p key={team.id}>Fixture: {team.fixture}</p>
-                                <p key={team.id}>Goals: {team.venue.status}</p>
-                                <p key={team.id}>Score: {team.score}</p> 
-                                <p key={team.id}>Event: {team.event}</p>
+                                <p>Fixture: {team.fixture}</p>
+                                <p>Goals: {team.venue.status}</p>
+                                <p>Score: {team.score}</p> 
+                                <p>Event: {team.event}</p>
                             </li>
                         </ul>
                     </div>
