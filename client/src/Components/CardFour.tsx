@@ -1,11 +1,8 @@
 
-import { useGetLFCPlayersStatsQuery } from "../store/apiSlice";
-import { APIProps } from "./CardOne";
+import { useGetLFCStatsQuery } from "../store/apiSlice";
+
 const CardFour = () => {
- const {data, isLoading, error } = useGetLFCPlayersStatsQuery('',{
-    refetchOnReconnect: true,
-    refetchOnFocus: true,
-})
+ const {data:playerStats, isLoading, error } = useGetLFCStatsQuery('');
  
     return (
     <div className='card-title'>
@@ -22,22 +19,10 @@ const CardFour = () => {
         <>
             loading...
         </>
-    ) : (data) ? (
+    ) : (playerStats) ? (
         <>
             
-                {data.response && data.response.map((team: APIProps) => (
-                    <div className="card" key={team.team_id}>
-                        <h2>{team.name}</h2>
-                        <p>{team.season}</p>
-                        <img src={team.logo} alt="team logo" />
-                        <ul>
-                            <li>
-                                <p>Player: {String(team.player)}</p>
-                                <p>stats: {team.statistics}</p>
-                            </li>
-                        </ul>
-                    </div>
-                ))}
+                {playerStats.data.response}
             
         </>
     ) : null}

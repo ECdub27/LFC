@@ -1,8 +1,8 @@
 
 import { useGetLFCStatsQuery } from "../store/apiSlice";
-import React, { ReactNode } from "react";
+import React, { Key, ReactNode } from "react";
 import './StyleCard.css';
-import { useEffect,useState} from 'react';
+
 
 export type APIProps = {
 season: ReactNode;
@@ -37,24 +37,51 @@ league: Array<object>;
 teams: Array<object>;
 score:Array<object>;
 events:Array<[]>;
-    // include other properties as needed
+venue: object; // include other properties as needed
   }>;
+players:Array<object>; 
+age: number;
+position: string;
+photo:string;
+}
+
+type apiProps ={
+    id: Key| number;
+    venue: object;
+    founded: ReactNode;
+    logo: string | undefined;
+    team_id: Key | null | undefined;
+    response: Array<{
+        team_id: number;
+        name: string;
+        logo: string;
+        season: number;
+    statistics: Array<[]>;
+    player: Array<object>;
+    fixtures: Array<object>;
+    league: Array<object>;
+    teams: Array<object>;
+    score:Array<object>;
+    events:Array<[]>;
+    venue: object; // include other properties as needed
+      }>;
+      name:string;
+    address: string;
+    city: "Liverpool";
+    capacity: number;
+    surface: string;
+    image: string;
+
 }
 
 
-
-
 const CardOneLFCTeamStats:React.FC= ():JSX.Element => {
-    const [lfcInformation, setLFCInformation] = useState(true);
+    
    
-    const {data, error, isLoading} = useGetLFCStatsQuery('', {
-        skip:lfcInformation,
-    });
+    const {data, error, isLoading} = useGetLFCStatsQuery('');
 
     
-    useEffect(() => {
-       
-    }, [data]);
+    
 
     return (
 
@@ -62,38 +89,41 @@ const CardOneLFCTeamStats:React.FC= ():JSX.Element => {
 
 <div className="card-title">
    
+{error ? (
+            <>
+                oh no theres an error
     
-    {error ? (
-        <>
-            oh no theres an error
-            {error}
-            
-        </>
-    ) : isLoading ? (
-        <>
-            loading...
-        </>
-    ) : (data && JSON.stringify(data) ) ? (
-        <>
-            {data&& data.map((team: APIProps) => (
-                <div className="card" key={team.team_id}>
-                    <h2>{team.name}</h2>
-                    <img src={team.logo} alt="team logo" />
-                    <ul>
-                        <li>
-                            <p>Founded: {team.founded}</p>
-                            <p>Venue: {team.venue_name}</p>
-                            <p>Address: {team.venue}</p>
-                            <p>Capacity: {team.capacity}</p>
-                        </li>
-                    </ul>
-                </div>
+                {error}
                 
-            ))}
-        </>
-    ) : null}
-
-<button onClick={() => setLFCInformation(false)}>Fetch Stats</button>        
+            </>
+        ) : isLoading ? (
+            <>
+                loading...
+              
+            </>
+        ) : (data) ? (
+            <>
+                {data.data1.response.map((team: apiProps) => (
+                    <div className="card" key={team.team_id}>
+                        <h2>{team.name}</h2>
+                        <img src={team.logo} alt="team logo" />
+                                                <ul>
+                                                    <li>
+                                                        <p key={team.id}>Founded: {team.founded}</p>
+                                                        <p key={team.id}>Venue: {(team.venue as { name: string })?.name}</p>
+                                                        <p key={team.id}>Address: {(team.venue as {
+                                                            address: ReactNode; name: string; capacity: number; image: string;
+                                                        })?.address}</p>
+                                                        <p key={team.id}>Capacity: {(team.venue as { capacity: number })?.capacity}</p>
+                                                        <p key={team.id}> Beautiful Historic Anfield</p>
+                                                        <img src={(team.venue as { image: string })?.image} />
+                                                    </li>
+                                                </ul>
+                    </div>
+                ))}
+            </>
+        ) : null}
+         
 
 </div>
 

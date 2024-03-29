@@ -19,3 +19,18 @@ div{
     margin-bottom:1rem;
     align-self: stretch;
 }
+
+ul{
+    display:flex;
+    flex-wrap: wrap;
+}
+li{
+    height: 40vh;
+    flex-grow: 1;
+}
+img{
+    max-height:  100%;
+    min-width: 100%;
+    object-fit: cover;
+    vertical-align: bottom;
+}

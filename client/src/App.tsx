@@ -25,6 +25,7 @@ function App() {
 const container = useRef<HTMLDivElement>(null);
 
 
+
   return (
     <>
       <div id='animation-container' ref={container}>
@@ -49,14 +50,18 @@ const container = useRef<HTMLDivElement>(null);
       
        <div className='card-parent-container'>
       <div className="card">
-      <h2 className='card-title'>Team Stats</h2>
+      <h2 className='card-title'>Squad Information </h2>
         <CardOneLFCTeamStats /> 
+        
         <div>
         </div>
       </div>
      <div className="card-2">
-         <h2 className='card-title2'>Squad Information</h2> 
+         <h2 className='card-title2'>Our Proud Starting XI</h2> 
+        
+        
         <CardTwo />
+  
      </div>
       
      <div className="card-3">

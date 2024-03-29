@@ -1,11 +1,21 @@
-import { useGetLFCInformationQuery } from "../store/apiSlice";
-import { APIProps } from "./CardOne";
 
+import { useGetLFCStatsQuery } from "../store/apiSlice";
+
+
+
+import { Key } from 'react';
+
+type RosterType = {
+    players: Array<object>;
+    name: string;
+    age: number;
+    position: string;
+    photo: string;
+    id: Key | number;
+    number: number;
+}
 const CardTwo = () => {
-const {data, isLoading, error } = useGetLFCInformationQuery('',{
-    refetchOnReconnect: true,
-    refetchOnFocus: true,
-})
+const {data:teamStats, isLoading, error } = useGetLFCStatsQuery('');
 
 return (
 <div className='card-title'>
@@ -21,19 +31,19 @@ return (
         <>
             loading...
         </>
-    ) : (data) ? (
+    ) : (teamStats) ? (
         <>
             
-                {data && data.response.map((team: APIProps) => (
-                    <div className="card" key={team.team_id}>
-                        <h2>{team.name}</h2>
-                        <img src={team.logo} alt="team logo" />
-                        <ul>
+                {teamStats.data3.response && teamStats.data3.response.map((players: RosterType) => (
+                    <div className="card">
+                        
+                        <ul key={players.id}>
                             <li>
-                        <p>Founded: {team.founded}</p>
-                        <p>Venue: {team.venue_name}</p>
-                        <p>Address: {team.venue}</p>
-                        <p>Capacity: {team.capacity}</p>
+                        <p key={players.id}>{players.name}</p>
+                        <p key={players.id}>Venue: {players.number}</p>
+                        <p key={players.id}>Address: {players.position}</p>
+                        <p key={players.id}>Capacity: {players.photo}</p>
+                        <img src={players.photo}/>
                         </li>
                         </ul>
                     </div>

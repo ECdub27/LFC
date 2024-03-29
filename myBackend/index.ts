@@ -9,12 +9,13 @@ const PORT = process.env.PORT || 3000;
 const api = process.env.API_KEY;
 
 const app = express();
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));  
 app.use(cors());
 app.options('*', cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-
+const teamUrl = "https://v3.football.api-sports.io/"
 
 
 
@@ -37,11 +38,18 @@ app.get("/cors", (_req, res) =>{
 
 const options = {
   method: 'GET',
-  // url: 'https://api-football-v1.p.rapidapi.com/v3/teams',
-  params: {id: '40'},
+  params: {id: '40',
+  team: '40',
+      live: 'all',
+    season: '2023',
+    // eslint-disable-next-line no-octal
+    from: '2020-08-01',
+    // eslint-disable-next-line no-octal
+    to: '2024-05-31',
+},
   headers: {
-    'X-RapidAPI-Key': `${api}`,
-    'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com',
+    'x-apisports-key': `${api}`,
+    'x-rapidapi-host': 'v3.football.api-sports.io',
     'Content-Type': 'application/json',
   }, 
   
@@ -51,20 +59,46 @@ const options = {
 
 
 
-
-
 app.get('/api/LFCStats', cors(), asyncHandler( async (_req, res) => {
-  const url = 'https://api-football-v1.p.rapidapi.com/v3/teams'
-    
-     try {
-      const response = await fetch(url, options).then((response) => {
-        if(response.ok){
-          return response.json();
-        }
-      }).then((data) => {
-        console.log(data);
-      })
-      return response;
+  const query1 = 'teams/seasons?team=40';
+const query2 = 'teams?id=40';
+const query3 = 'fixtures/headtohead?h2h=40-49';
+const query4 = 'players/squads?team=40';
+
+try {
+      const response = await fetch(`${teamUrl}${query1}`, options);
+      if(!response.ok){
+        throw new Error(`HTTP error! status: ${response.status}`);
+        
+      }
+      const data = await response.json();
+
+      const response1 = await fetch(`${teamUrl}${query2}`, options);
+      if(!response1.ok){
+        throw new Error(`HTTP error! status: ${response1.status}`);
+        
+      }
+      const data1 = await response1.json();
+
+      const response2 = await fetch(`${teamUrl}${query3}`, options);
+      if(!response2.ok){
+        throw new Error(`HTTP error! status: ${response2.status}`);
+        
+      }
+      const data2 = await response2.json();
+
+      const response3 = await fetch(`${teamUrl}${query4}`, options);
+      if(!response3.ok){
+        throw new Error(`HTTP error! status: ${response3.status}`);
+        
+      }
+      const data3 = await response3.json();
+
+      
+      
+      console.log({data, data1, data2, data3});
+      res.send({data, data1, data2, data3,});
+      
       
     } catch (error) {
         if(error instanceof Error){
@@ -77,104 +111,7 @@ app.get('/api/LFCStats', cors(), asyncHandler( async (_req, res) => {
 }));
 
 
-app.get('/api/LFCInformation', asyncHandler( async (_req, res) => {
- const url = 'https://api-football-v1.p.rapidapi.com/v2/coachs/coach/1';
-   
-    const options = {
-        method: 'GET',
-       params: {team: '40'},
-       headers: {
-    'X-RapidAPI-Key': `${api}`,
-    'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
-  }
-      };
-      
-      try {
-          const response = await fetch(url, options).then((response) =>{
-            if(response.ok){
-              return response.json();
-            }
-          }).then((data) =>{
-            console.log(data);
 
-          });
-          return response;
-      } catch (error) {
-        if(error instanceof Error){
-          res.status(500).send(error);
-          console.log(error);
-        }
-      }
-      
-      
-}));
-
-
-app.get('/api/LFCFixuturesById',asyncHandler (async  (req, res) => {
-  const url = 'https://api-football-v1.p.rapidapi.com/v3/fixtures'
-    
-   
-    const options = {
-        method: 'GET',
-        params: {live: 'all'},
-        headers: {
-          'X-RapidAPI-Key': `${api}`,
-          'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
-        }
-      };
-      
-      try {
-          const response = await fetch(url, options).then((response) =>{
-            if(response.ok){
-              return response.json();
-
-            }
-          }).then((data) =>{
-            console.log(data);
-          })
-          return response;
-      } catch (error) {
-        if(error instanceof Error){
-          res.status(500).send(error);
-          console.log(error);
-        }
-      }
-      
-}));
-
-app.get('/api/LFCPlayersStats',   asyncHandler( async (req, res) => {
-  const url = 'https://api-football-v1.p.rapidapi.com/v3/players';
-  
-    const options = {
-        method: 'GET',
-        params: {
-          team: '40',
-          season: '2023'
-        },
-        headers: {
-          'X-RapidAPI-Key':  `${api}`,
-          'X-RapidAPI-Host': 'api-football-v1.p.rapidapi.com'
-        }
-      };
-
-    try {
-        const response = await fetch(url,options).then((response) =>{
-          if(response.ok){
-            return response.json();
-          }
-        }).then((data) =>{
-          console.log(data);
-        })
-        return response;
-        
-    } catch (error) {
-      if(error instanceof Error){
-        res.status(500).send(error);
-        console.log(error);
-      }
-    }
-    
-}));
 
 app.get('*', cors(), (_req, res) => {
   res.send('Hello World!');

@@ -1,14 +1,34 @@
 
-import { useGetLFCFixuturesByIdQuery } from "../store/apiSlice";
-import { APIProps } from "./CardOne";
+import { useGetLFCStatsQuery} from "../store/apiSlice";
 
+
+type FixtureType = {
+    fixture: string;
+    goals: number;
+    score: number;
+    event: string;
+    team_id: number;
+    name: string;
+    logo: string;
+    season: number;
+    statistics: Array<[]>;
+    player: Array<object>;
+    fixtures: Array<object>;
+    league: Array<object>;
+    teams: Array<object>;
+    events:Array<[]>;
+    venue: {
+        status: string| number | string; // include other properties as needed
+    };
+    fulltime:{
+        home: number;
+        away: number;
+    };
+    }
 
 const CardThree = () => {
 
-const {data, isLoading, error } = useGetLFCFixuturesByIdQuery('',{
-    refetchOnReconnect: true,
-    refetchOnFocus: true,
-})
+const {data:teamFixtures, isLoading, error } = useGetLFCStatsQuery('')
     return (
     <div className='card-title'>
     
@@ -24,20 +44,23 @@ const {data, isLoading, error } = useGetLFCFixuturesByIdQuery('',{
         <>
             loading...
         </>
-    ) : (data) ? (
+    ) : (teamFixtures) ? (
         <>
             
-                { data && data.response.map((team: APIProps) => (
+                { teamFixtures.data2.response && teamFixtures.data2.response.map((team: FixtureType) => (
+                    
+
                     <div className="card" key={team.team_id}>
                         <h2>{team.name}</h2>
                         <img src={team.logo} alt="team logo" />
                         <ul>
                             <li>
-                        <p key={team.team_id}>Fixture: {team.fixture}</p>
-                        <p key={team.team_id}>Goals: {team.goals}</p>
-                        <p key={team.team_id}> Score : {team.score}</p>
-                        <p key={team.team_id}>Event: {team.event}</p>
-                        </li>
+                                <span>{team.fixture}</span> 
+                                <p key={team.id}>Fixture: {team.fixture}</p>
+                                <p key={team.id}>Goals: {team.venue.status}</p>
+                                <p key={team.id}>Score: {team.score}</p> 
+                                <p key={team.id}>Event: {team.event}</p>
+                            </li>
                         </ul>
                     </div>
                 ))}
