@@ -48,7 +48,7 @@ const options = {
     to: '2024-05-31',
 },
   headers: {
-    'x-apisports-key': `${api}`,
+'x-apisports-key': `${api}`,
     'x-rapidapi-host': 'v3.football.api-sports.io',
     'Content-Type': 'application/json',
   }, 

@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { Provider } from 'react-redux'
-import {store} from './store/indexStore.ts'; // Import the 'store' module from the correct file path
+import {store} from './store/indexStore.ts'; 
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>

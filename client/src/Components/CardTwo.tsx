@@ -17,6 +17,8 @@ type RosterType = {
 const CardTwo = () => {
 const {data:teamStats, isLoading, error } = useGetLFCStatsQuery('');
 
+console.log(teamStats)
+if(!teamStats) return null;
 return (
 <div className='card-title'>
 
@@ -24,35 +26,35 @@ return (
 <h1>LFC Information</h1>
 
 {error ? (
-        <>
-            oh no theres an error
-        </>
-    ) : isLoading ? (
-        <>
-            loading...
-        </>
-    ) : (teamStats) ? (
-        <>
-            
-                {teamStats.data3.response && teamStats.data3.response.map((players: RosterType) => (
-                    <div className="card">
-                        
-                        <ul key={players.id}>
-                            <li>
-                        <p key={players.id}>{players.name}</p>
-                        <p key={players.id}>Venue: {players.number}</p>
-                        <p key={players.id}>Address: {players.position}</p>
-                        <p key={players.id}>Capacity: {players.photo}</p>
-                        <img src={players.photo}/>
-                        </li>
-                        </ul>
-                    </div>
-                ))}
-            
-        </>
-    ) : null}
+    <>
+        oh no theres an error
+    </>
+) : isLoading ? (
+    <>
+        loading...
+    </>
+) : (teamStats) ? (
+    <>
+        
+            {teamStats.response && teamStats.data3.response.map((players: RosterType) => (
+                <div className="card" key={players.id}>
+                    
+                    <ul >
+                        <li>
+                    <p >{players.name}</p>
+                    <p >Venue: {players.number}</p>
+                    <p >Address: {players.position}</p>
+                    <p >Capacity: {players.photo}</p>
+                    <img src={players.photo}/>
+                    </li>
+                    </ul>
+                </div>
+            ))}
+        
+    </>
+) : null}
 
-                       
+              
 
 </div>
 

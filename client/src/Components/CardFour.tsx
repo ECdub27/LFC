@@ -3,6 +3,9 @@ import { useGetLFCStatsQuery } from "../store/apiSlice";
 
 const CardFour = () => {
  const {data:playerStats, isLoading, error } = useGetLFCStatsQuery('');
+  
+ console.log(playerStats);
+ if (!playerStats) return null;
  
     return (
     <div className='card-title'>
@@ -10,24 +13,29 @@ const CardFour = () => {
     
     <h1>LFC Player Stats</h1>
     
-    
     {error ? (
-        <>
-            oh no theres an error
-        </>
-    ) : isLoading ? (
-        <>
-            loading...
-        </>
-    ) : (playerStats) ? (
-        <>
+    <>
+        oh no theres an error
+    </>
+) : isLoading ? (
+    <>
+        loading...
+    </>
+) : (playerStats) ? (
+    <>
+        {playerStats.data.response && playerStats.data.response.map((players: string) => (
             
-                {playerStats.data.response}
+            <div>
+                {players}
+            </div>
+        
+        ))}
             
-        </>
-    ) : null}
+        
+    </>
+) : null}
 
-                       
+                    
 
 </div>
     

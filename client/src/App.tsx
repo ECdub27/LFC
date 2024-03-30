@@ -9,6 +9,8 @@ import CardThree from './Components/CardThree';
 import CardTwo from './Components/CardTwo';
 import CardFour from './Components/CardFour';
 import { useRef } from 'react';
+//import {QueryClient, QueryClientProvider} from  'react-query'; // Import the 'store' module from the correct file path
+  
 
 export type AppProps = {
   team_id: number;
@@ -20,6 +22,8 @@ export type AppProps = {
   venue_capacity: number;
 }
 
+
+
 function App() {
  
 const container = useRef<HTMLDivElement>(null);
@@ -27,6 +31,7 @@ const container = useRef<HTMLDivElement>(null);
 
 
   return (
+    
     <>
       <div id='animation-container' ref={container}>
 
@@ -80,6 +85,7 @@ const container = useRef<HTMLDivElement>(null);
      </main>
       </div>
     </>
+    
   )
 }
 

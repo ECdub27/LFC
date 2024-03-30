@@ -22,7 +22,8 @@ tagTypes:['LFCStats'],
     endpoints: (builder) => ({
         getLFCStats: builder.query({
             query: () => 'api/LFCStats',
-            invalidatesTags: undefined,
+            providesTags: ['LFCStats'],
+            keepUnusedDataFor:Infinity,
         }),
     }),
        
