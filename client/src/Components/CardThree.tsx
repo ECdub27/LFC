@@ -1,44 +1,67 @@
 
-import { useGetLFCStatsQuery} from "../store/apiSlice";
+
+import {useState, useEffect} from 'react';
 
 
-type FixtureType = {
-    fixture: string;
-    goals: number;
-    score: number;
-    event: string;
+type ResponseType = {
+    // Define the shape of the objects in the 'response' array here
+    // For example:
+    name: string;
+    age: number;
+  }
+  
+  type DataType = {
+    response: ResponseType[];
+  }
+  
+  type FixtureType = {
     team_id: number;
     name: string;
     logo: string;
     season: number;
-    statistics: Array<[]>;
-    player: Array<object>;
-    fixtures: Array<object>;
-    league: Array<object>;
-    teams: Array<object>;
-    events:Array<[]>;
-    venue: {
-        status: string| number | string; // include other properties as needed
-    };
-    fulltime:{
-        home: number;
-        away: number;
-    };
-    }
+    statistics: [][]; 
+    player: object[];
+    fixtures: object[];
+    league: object[];
+    teams: object[];
+    events: [][]; 
+    venue: { status: string | number; };
+    fulltime: { home: number; away: number; };
+    fixture: any; // Replace 'any' with the actual type of 'fixture'
+    data2: DataType; // Define 'data2' as an object with a 'response' property
+  }
 
 
 const CardThree = () => {
+    const [teamFixtures, setTeamFixtures] = useState<FixtureType | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
+  
+    useEffect(() => {
+      setIsLoading(true);
+      setError(null);
+  
+      fetch('http://localhost:3000/api/LFCStats')
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error('Error: ' + response.status);
+          }
+        })
+        .then(data => {
+          setTeamFixtures(data);
+          setIsLoading(false);
+        })
+        .catch(error => {
+          setError(error.message);
+          setIsLoading(false);
+        });
+    }, []);
 
-const {data:teamFixtures, isLoading, error } = useGetLFCStatsQuery('')
 console.log(teamFixtures)
-if(!teamFixtures) return null;
 
-    return (
-    <div className='card-title'>
-    
-    
-    <h1>LFC Fixtures</h1>
-    {error ? (
+{error ? (
     <>
         oh no theres an error
     </>
@@ -46,38 +69,32 @@ if(!teamFixtures) return null;
     <>
         loading...
     </>
-) : (teamFixtures) ? (
-    <>
-        
-            { teamFixtures?.data2?.response && teamFixtures?.data2?.response.map((team: FixtureType) => (
-                
+) : <>No data</>}
 
-                <div className="card" key={team.team_id}>
-                    <h2>{team.name}</h2>
-                    <img src={team.logo} alt="team logo" />
-                    <ul>
-                        <li>
-                            <span>{team.fixture}</span> 
-                            <p>Fixture: {team.fixture}</p>
-                            
-                        </li>
-                    </ul>
-                </div>
+    return (
+        <div>
+      {teamFixtures?.data2.response.map((team: FixtureType) => (
+        <div className="card" key={team.team_id}>
+          <h2>{team.name}</h2>
+          <img src={team.logo} alt="team logo" />
+          <ul>
+            <li>
+              <span>{team.fixture}</span>
+              <p>Fixture: {team.fixture}</p>
+            </li>
+            {team.data2.response.map((item, index) => (
+              <li key={index}>
+                <p>Name: {item.name}</p>
+                <p>Age: {item.age}</p>
+                // Render other properties as needed
+              </li>
             ))}
-        
-    </>
-) : null}
-    
-   
-
-                       
-
-</div>
-    
+          </ul>
+        </div>
+      ))}
+    </div>
     );
     
-    
-    
-    };
+}
     
     export default CardThree;

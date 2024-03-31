@@ -9,8 +9,7 @@ import CardThree from './Components/CardThree';
 import CardTwo from './Components/CardTwo';
 import CardFour from './Components/CardFour';
 import { useRef } from 'react';
-//import {QueryClient, QueryClientProvider} from  'react-query'; // Import the 'store' module from the correct file path
-  
+
 
 export type AppProps = {
   team_id: number;
@@ -38,7 +37,7 @@ const container = useRef<HTMLDivElement>(null);
       <Player
   autoplay
   loop
-  src="client/src/Animation - 1711399486243.json"
+  src=""
   style={{ height: '300px', width: '300px' }}
 >
   <Controls visible={true} buttons={['play', 'repeat', 'frame', 'debug']} />
