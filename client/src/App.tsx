@@ -1,14 +1,14 @@
 
 import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import { Player, Controls } from '@lottiefiles/react-lottie-player';
-
+import Lottie from 'react-lottie';
+import footieLottie from './footie.json';
+import football from './soccerball.json';
 import './App.css'
 import CardOneLFCTeamStats from './Components/CardOne';
 import CardThree from './Components/CardThree';
 import CardTwo from './Components/CardTwo';
 import CardFour from './Components/CardFour';
-import { useRef } from 'react';
+
 
 
 export type AppProps = {
@@ -25,32 +25,40 @@ export type AppProps = {
 
 function App() {
  
-const container = useRef<HTMLDivElement>(null);
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: footieLottie,  
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice'
+  }
+};
+const defaultOptions1 ={
+  loop: true,
+  autoplay: true,
+  animationData: football,  
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice'
+  }
+}
 
 
 
   return (
     
     <>
-      <div id='animation-container' ref={container}>
+      <div id='animation-container' >
 
-      <Player
-  autoplay
-  loop
-  src=""
-  style={{ height: '300px', width: '300px' }}
->
-  <Controls visible={true} buttons={['play', 'repeat', 'frame', 'debug']} />
-</Player>
+      <Lottie options={defaultOptions} height={400} width={400} />
         
         <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
+         <Lottie options={defaultOptions1} height={400} width={400}/> 
         </a>
         <a href="https://react.dev" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-      <h1>You Will Never Walk Alone</h1>
+      <h1 className='head-title'>You Will Never Walk Alone</h1>
       
        <div className='card-parent-container'>
       <div className="card">

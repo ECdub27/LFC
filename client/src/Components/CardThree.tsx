@@ -27,13 +27,19 @@ type ResponseType = {
     events: [][]; 
     venue: { status: string | number; };
     fulltime: { home: number; away: number; };
-    fixture: any; // Replace 'any' with the actual type of 'fixture'
+    fixture: []; // Replace 'any' with the actual type of 'fixture'
     data2: DataType; // Define 'data2' as an object with a 'response' property
+  }
+
+  type TeamFixturesType ={
+    data2: {
+      response: FixtureType[];
+    }
   }
 
 
 const CardThree = () => {
-    const [teamFixtures, setTeamFixtures] = useState<FixtureType | null>(null);
+    const [teamFixtures, setTeamFixtures] = useState<TeamFixturesType | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
   
