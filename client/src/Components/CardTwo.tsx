@@ -1,5 +1,6 @@
 
 
+import { Card, CardContent } from '@mui/material';
 import {useState, useEffect, ReactNode} from 'react';
 
 
@@ -25,15 +26,27 @@ type RosterType = {
     };
 }
 const CardTwo = () => {
-    const [teamStats, setTeamStats] = useState<RosterType | null>(null);
+    const [teamStats, setTeamStats] = useState<RosterType | null>({
+        name: null,
+        position: null,
+        photo: null,
+        number: null,
+        id: null,
+        data3: { response: [] }
+    });
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
+
+    const ids = teamStats?.data3.response.map((players: { id: Key; }) => players.id);
+    const uniqueIds = new Set(ids);
+    console.log(uniqueIds);
+
   
     useEffect(() => {
       setIsLoading(true);
       setError(null);
   
-      fetch('http://localhost:3000/api/LFCStats')
+      fetch('http://localhost:3000/api/LFCPlayers/squads')
         .then(response => {
           if (response.ok) {
             return response.json();
@@ -51,7 +64,7 @@ const CardTwo = () => {
         });
     }, []);
 
-console.log(teamStats)
+
 
 {error ? (
     <>
@@ -66,7 +79,9 @@ return (
     <div className='card-title'>
         <h1>LFC Information</h1>
         {teamStats?.data3.response && teamStats.data3.response.map((players: { players: object[]; name: string; age: number; position: string; photo: string; id: Key; number: number; }) => (
+            <Card>
             <div className="card" key={players.id}>
+                <CardContent>
                 <ul>
                     <li>
                         <p>{players.name}</p>
@@ -76,7 +91,9 @@ return (
                         <img src={players.photo as string} />
                     </li>
                 </ul>
+                </CardContent>
             </div>
+            </Card>
         ))}
     </div>
 );

@@ -61,9 +61,7 @@ const options = {
 
 app.get('/api/LFCStats', cors(), asyncHandler( async (_req, res) => {
   const query1 = 'teams/seasons?team=40';
-const query2 = 'teams?id=40';
-const query3 = 'fixtures/headtohead?h2h=40-49';
-const query4 = 'players/squads?team=40';
+
 
 try {
       const response = await fetch(`${teamUrl}${query1}`, options);
@@ -73,31 +71,14 @@ try {
       }
       const data = await response.json();
 
-      const response1 = await fetch(`${teamUrl}${query2}`, options);
-      if(!response1.ok){
-        throw new Error(`HTTP error! status: ${response1.status}`);
-        
-      }
-      const data1 = await response1.json();
-
-      const response2 = await fetch(`${teamUrl}${query3}`, options);
-      if(!response2.ok){
-        throw new Error(`HTTP error! status: ${response2.status}`);
-        
-      }
-      const data2 = await response2.json();
-
-      const response3 = await fetch(`${teamUrl}${query4}`, options);
-      if(!response3.ok){
-        throw new Error(`HTTP error! status: ${response3.status}`);
-        
-      }
-      const data3 = await response3.json();
+      
+      
 
       
       
-      console.log({data, data1, data2, data3});
-      res.send({data, data1, data2, data3,});
+      
+      console.log({data});
+      res.send({data});
       
       
     } catch (error) {
@@ -110,7 +91,70 @@ try {
 
 }));
 
+app.get('/api/LFCTeams', cors(), asyncHandler( async (_req, res) => {
+  const query2 = 'teams?id=40';
+  
+try{
+  const response1 = await fetch(`${teamUrl}${query2}`, options);
+  if(!response1.ok){
+    throw new Error(`HTTP error! status: ${response1.status}`);
+    
+  }
+  const data1 = await response1.json();
+  console.log({data1});
+  res.send({data1});
+  
+} catch(error){
+  if(error instanceof Error){
+    res.status(500).send(error);
+    console.log(error);
+  }
+}
 
+}));
+
+app.get('/api/LFCFixtures/headtohead', cors(), asyncHandler( async (_req, res) => {
+  const query3 = 'fixtures/headtohead?h2h=40-49';
+  try{
+    const response2 = await fetch(`${teamUrl}${query3}`, options);
+    if(!response2.ok){
+      throw new Error(`HTTP error! status: ${response2.status}`);
+      
+    }
+    const data2 = await response2.json();
+    console.log({data2});
+    res.send({data2});
+   
+  } catch(error){
+    if(error instanceof Error){
+      res.status(500).send(error);
+      console.log(error);
+    }
+  }
+  
+
+}));
+
+app.get('/api/LFCPlayers/squads', cors(), asyncHandler( async (_req, res) => {
+  const query4 = 'players/squads?team=40';
+
+  try{
+    const response3 = await fetch(`${teamUrl}${query4}`, options);
+      if(!response3.ok){
+        throw new Error(`HTTP error! status: ${response3.status}`);
+        
+      }
+      const data3 = await response3.json();
+      console.log({data3});
+      res.send({data3});
+  } catch(error){
+    if(error instanceof Error){
+      res.status(500).send(error);
+      console.log(error);
+    }
+  }
+
+}));
 
 
 app.get('*', cors(), (_req, res) => {

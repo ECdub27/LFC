@@ -1,5 +1,7 @@
 
-
+import  Card  from '@mui/material/Card';
+import  Typography  from '@mui/material/Typography';
+import  CardContent  from '@mui/material/CardContent';
 import {useState, useEffect} from 'react';
 
 
@@ -39,7 +41,7 @@ type ResponseType = {
 
 
 const CardThree = () => {
-    const [teamFixtures, setTeamFixtures] = useState<TeamFixturesType | null>(null);
+    const [teamFixtures, setTeamFixtures] = useState<TeamFixturesType | null>({ data2: { response: [] } });
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
   
@@ -47,7 +49,7 @@ const CardThree = () => {
       setIsLoading(true);
       setError(null);
   
-      fetch('http://localhost:3000/api/LFCStats')
+      fetch('http://localhost:3000/api/LFCFixtures/headtohead')
         .then(response => {
           if (response.ok) {
             return response.json();
@@ -65,7 +67,7 @@ const CardThree = () => {
         });
     }, []);
 
-console.log(teamFixtures)
+
 
 {error ? (
     <>
@@ -77,28 +79,25 @@ console.log(teamFixtures)
     </>
 ) : <>No data</>}
 
+  // Replace 'package-name' with the actual package name that contains the 'Card' component
+
+    
+
     return (
-        <div>
-      {teamFixtures?.data2?.response.map((fixture: FixtureType, index: number) => (
-        <div className="card" key={index}>
-          <h2>{fixture.name}</h2>
-          <img src={fixture.logo} alt="team logo" />
-          <ul>
-            <li>
-              <span>{fixture.fixture}</span>
-              <p>Fixture: {fixture.fixture}</p>
-            </li>
-            {fixture.data2.response.map((item, index) => (
-              <li key={index}>
-                <p>Name: {item.name}</p>
-                <p>Age: {item.age}</p>
-                // Render other properties as needed
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
+      <Card>
+        <CardContent>
+        <Typography variant="h5" component="h2">
+          {teamFixtures?.data2?.get}
+        </Typography>
+        <Typography color="textSecondary">
+          Parameters: {JSON.stringify(teamFixtures?.data2?.parameters)}
+        </Typography>
+        <Typography variant="body2" component="p">
+          Results: {teamFixtures?.data2?.results} // Fix: Add 'results' property to FixtureType
+        </Typography>
+        {/* Render other data as needed */}
+        </CardContent>
+      </Card>
     );
     
 }

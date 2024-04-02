@@ -60,37 +60,36 @@ const defaultOptions1 ={
       </div>
       <h1 className='head-title'>You Will Never Walk Alone</h1>
       
-       <div className='card-parent-container'>
-      <div className="card">
+       
+     
       <h2 className='card-title'>Squad Information </h2>
         <CardOneLFCTeamStats /> 
         
         <div>
-        </div>
-      </div>
-     <div className="card-2">
+        
+    
          <h2 className='card-title2'>Our Proud Starting XI</h2> 
         
         
         <CardTwo />
   
-     </div>
+     
       
-     <div className="card-3">
+     
           <h2 className='card-title3'> Squad Fixtures</h2>
         <CardThree />
-     </div>
+     
 
     
     
-     <div className='card-4'>
+     
        <h2 className='card-title4'>Squads Stats</h2>
        <CardFour />
-     </div>
+     
      <main>
 
      </main>
-      </div>
+    </div>
     </>
     
   )

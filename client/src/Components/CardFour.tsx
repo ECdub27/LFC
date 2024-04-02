@@ -1,5 +1,6 @@
 
 
+import { Card, CardContent } from '@mui/material';
 import {useState, useEffect} from 'react';
 type PlayerStatsType = {
     data: {
@@ -34,9 +35,17 @@ type PlayerStatsType = {
   }
 
 const CardFour = () => {
-    const [playerStats, setPlayerStats] = useState<PlayerStatsType | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+    const [playerStats, setPlayerStats] = useState<PlayerStatsType | null>({
+      data: { response: [] },
+      name: '',
+      age: 0,
+      position: '',
+      photo: '',
+      id: '',
+      number: 0,
+    });
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState(null);
 
   useEffect(() => {
     setIsLoading(true);
@@ -75,9 +84,11 @@ const CardFour = () => {
     <div className='card-title'>
         <h1>LFC Player Stats</h1>
         {playerStats.data.response && playerStats.data.response.map((player: { team_id: number; name: string; logo: string; season: number; statistics: [][]; player: object[]; fixtures: object[]; league: object[]; teams: object[]; events: [][]; venue: { status: string | number; }; fulltime: { home: number; away: number; }; }) => (
-            <div>
+            <Card>
+              <CardContent>
                 {player.name}
-            </div>
+                </CardContent>
+            </Card>
         ))}
     </div>
     

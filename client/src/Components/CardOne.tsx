@@ -2,6 +2,7 @@
 import React from "react";
 import './StyleCard.css';
 import {useState, useEffect} from 'react';
+import { Card, CardContent } from "@mui/material";
 
 export type APIProps = {
 data1: {
@@ -52,13 +53,13 @@ type VenueType = {
 const CardOneLFCTeamStats:React.FC= ():JSX.Element => {
     
    
-   const [data, setData] = useState<DataType | null>(null);
+   const [data, setData] = useState<DataType | null>({ data1: { response: [] } });
    const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     
    
   useEffect(() =>{
-   fetch('http://localhost:3000/api/LFCStats')
+   fetch('http://localhost:3000/api/LFCTeams')
    .then(response => {
     if(response.ok){
         return response.json();
@@ -104,19 +105,25 @@ const CardOneLFCTeamStats:React.FC= ():JSX.Element => {
     ) : (
       <>
         { data && data.data1.response.map((team:TeamType) => (
-          <div className="card">
+          <div className="card" key={team.id}>
+            <Card>
+              <CardContent>
             <h2>{team.name}</h2>
             <img src={team.logo} alt="team logo" />
+            </CardContent>
+            <CardContent>
             <ul>
-              <li key={team.id}>
-                <p>Founded: {team.founded}</p>
-                <p>Venue: {(team.venue as { name: string, address: string, capacity: number, image: string }).name}</p>
-                <p>Address: {(team.venue as { name: string, address: string, capacity: number, image: string }).address}</p>
-                <p>Capacity: {(team.venue as { name: string, address: string, capacity: number, image: string }).capacity}</p>
-                <p>Beautiful Historic Anfield</p>
+              <li>
+              Beautiful Historic Anfield
                 <img src={(team.venue as { name: string, address: string, capacity: number, image: string }).image} />
+                <li>Founded: {team.founded}</li>
+                <li>Venue: {(team.venue as { name: string, address: string, capacity: number, image: string }).name}</li>
+                <li>Address: {(team.venue as { name: string, address: string, capacity: number, image: string }).address}</li>
+                <li>Capacity: {(team.venue as { name: string, address: string, capacity: number, image: string }).capacity}</li>
               </li>
             </ul>
+            </CardContent>
+            </Card>
           </div>
         ))}
       </>
