@@ -42,7 +42,9 @@ type VenueType = {
   };
   
   type DataType = {
-    response: TeamType[];
+    data1: {
+      response: TeamType[];
+    };
   };
  
   
@@ -101,7 +103,7 @@ const CardOneLFCTeamStats:React.FC= ():JSX.Element => {
       </>
     ) : (
       <>
-        {data && data.response && data.response.map((team) => (
+        { data && data.data1.response.map((team:TeamType) => (
           <div className="card">
             <h2>{team.name}</h2>
             <img src={team.logo} alt="team logo" />

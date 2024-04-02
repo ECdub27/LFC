@@ -79,16 +79,16 @@ console.log(teamFixtures)
 
     return (
         <div>
-      {teamFixtures?.data2.response.map((team: FixtureType) => (
-        <div className="card" key={team.team_id}>
-          <h2>{team.name}</h2>
-          <img src={team.logo} alt="team logo" />
+      {teamFixtures?.data2?.response.map((fixture: FixtureType, index: number) => (
+        <div className="card" key={index}>
+          <h2>{fixture.name}</h2>
+          <img src={fixture.logo} alt="team logo" />
           <ul>
             <li>
-              <span>{team.fixture}</span>
-              <p>Fixture: {team.fixture}</p>
+              <span>{fixture.fixture}</span>
+              <p>Fixture: {fixture.fixture}</p>
             </li>
-            {team.data2.response.map((item, index) => (
+            {fixture.data2.response.map((item, index) => (
               <li key={index}>
                 <p>Name: {item.name}</p>
                 <p>Age: {item.age}</p>
