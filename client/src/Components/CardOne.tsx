@@ -124,7 +124,7 @@ const CardOneLFCTeamStats:React.FC= ():JSX.Element => {
               <ThemeProvider theme={theme}>
             <Card>
               <CardContent>
-            <h2>{team.team.name}</h2>
+            <h1 className='title'>{team.team.name}</h1>
             <img src={team.team.logo} alt="team logo" />
             </CardContent>
             <CardContent>

@@ -26,6 +26,7 @@ type RosterType = {
     number: number;
     }>;
     };
+
 }
 
 
@@ -41,11 +42,6 @@ const theme = createTheme({
 
 const CardTwo = () => {
     const [teamStats, setTeamStats] = useState<RosterType | null>({
-        name: '',
-        position: '',
-        photo: null,
-        number: null,
-        id: null,
         data3: { response: [] }
     });
     const [isLoading, setIsLoading] = useState(true);
@@ -106,32 +102,31 @@ return (
                 photo: string;
             }[];
         }) => (
-            <Card className='card-container' sx={{maxWidth:350}}>
-                <div className="card" key={player.id}>
-                    <CardContent>
+            <Card className='card-container' key={player.id} sx={{maxWidth:'fit-content', display: 'flex', flexDirection:'column'}}>
+                
+                    <CardContent sx={{ display: 'flex', flexDirection: 'row', gap: '10px',}}>
                         
                         {player.players.map((p: {
+                            [x: string]: string | number | Key;
+                            name:string;
                             id: Key;
-                            name: string;
                             age: number;
                             position: string;
                             photo: string;
                            
                         }) => (
-                            <div key={p.id}>
+                            <div className="player-row" key={p.id}>
                                 <span>
-                                {p.name}
-                                
-                                {p.number}
-                                
-                                {p.position}
+                                    <div className="player-info">{p.name}</div>
+                                    <div className="player-info">{String(p.number)}</div>
+                                    <div className="player-info">{p.position}</div>
                                 </span>
                                 <img src={p.photo} alt="player photo" />
                             </div>
                         ))}
                         
                     </CardContent>
-                </div>
+                
             </Card>
         ))}
         </ThemeProvider>

@@ -31,6 +31,8 @@ color themes
 */
 .head-title{
   padding-top: 20%;
+  color:#FFE140;
+  font-family: 'League Spartan','Segoe UI', Tahoma, Geneva, Verdana, sans-serif
 }
 .logo {
   height: 10em;
@@ -69,9 +71,16 @@ color themes
   color: rgba(255, 255, 255, 0.88);
 }
 
-.lottie-container {
+
+.card-parent-container {
   display: flex;
-  justify-content: space-between;
+  align-items: flex-start;
+  height: 200px;
+}
+
+.animation-container,
+.animation-container1 {
+  display: inline-block;
 }
 
 .read-the-docs {
