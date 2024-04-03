@@ -1,21 +1,23 @@
 
 
-import { Card, CardContent } from '@mui/material';
-import {useState, useEffect, ReactNode} from 'react';
-
+import { Card, CardContent, ThemeProvider,  createTheme } from '@mui/material';
+import {useState, useEffect} from 'react';
+import './cardTwo.css';
 
 
 import { Key } from 'react';
 
 type RosterType = {
-    name: ReactNode;
-    position: ReactNode;
-    photo: ReactNode;
-    number: ReactNode;
-    id: Key | null | undefined;
     data3:{
         response:Array<{
-    players: Array<object>;
+    players: Array<{
+    id: Key | number;
+    name: string; 
+    age: number;
+    position: string;
+    photo: string;
+    number: number;
+    }>;
     name: string;
     age: number;
     position: string;
@@ -25,10 +27,22 @@ type RosterType = {
     }>;
     };
 }
+
+
+
+const theme = createTheme({
+        palette: {
+            background: {
+                paper: '#B71515', // lfc read
+            },
+        },
+    });
+
+
 const CardTwo = () => {
     const [teamStats, setTeamStats] = useState<RosterType | null>({
-        name: null,
-        position: null,
+        name: '',
+        position: '',
         photo: null,
         number: null,
         id: null,
@@ -37,9 +51,7 @@ const CardTwo = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const ids = teamStats?.data3.response.map((players: { id: Key; }) => players.id);
-    const uniqueIds = new Set(ids);
-    console.log(uniqueIds);
+    
 
   
     useEffect(() => {
@@ -77,24 +89,52 @@ const CardTwo = () => {
 ) : <>No data</>}
 return (
     <div className='card-title'>
-        <h1>LFC Information</h1>
-        {teamStats?.data3.response && teamStats.data3.response.map((players: { players: object[]; name: string; age: number; position: string; photo: string; id: Key; number: number; }) => (
-            <Card>
-            <div className="card" key={players.id}>
-                <CardContent>
-                <ul>
-                    <li>
-                        <p>{players.name}</p>
-                        <p>Venue: {players.number}</p>
-                        <p>Address: {players.position}</p>
-                        <p>Capacity: {players.photo}</p>
-                        <img src={players.photo as string} />
-                    </li>
-                </ul>
-                </CardContent>
-            </div>
+        <ThemeProvider theme={theme}>
+        <h1>Roster</h1>
+        {teamStats?.data3.response && teamStats.data3.response.map((player: {
+            id: Key;
+            name: string;
+            age: number;
+            position: string;
+            photo: string;
+            number: number;
+            players: {
+                id: Key;
+                name: string;
+                age: number;
+                position: string;
+                photo: string;
+            }[];
+        }) => (
+            <Card className='card-container' sx={{maxWidth:350}}>
+                <div className="card" key={player.id}>
+                    <CardContent>
+                        
+                        {player.players.map((p: {
+                            id: Key;
+                            name: string;
+                            age: number;
+                            position: string;
+                            photo: string;
+                           
+                        }) => (
+                            <div key={p.id}>
+                                <span>
+                                {p.name}
+                                
+                                {p.number}
+                                
+                                {p.position}
+                                </span>
+                                <img src={p.photo} alt="player photo" />
+                            </div>
+                        ))}
+                        
+                    </CardContent>
+                </div>
             </Card>
         ))}
+        </ThemeProvider>
     </div>
 );
 

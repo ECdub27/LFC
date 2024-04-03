@@ -1,9 +1,9 @@
 
-import React from "react";
+import React, { Key } from "react";
 import './StyleCard.css';
 import {useState, useEffect} from 'react';
 import { Card, CardContent } from "@mui/material";
-
+import { ThemeProvider,  createTheme } from '@mui/material';
 export type APIProps = {
 data1: {
 response: Array<{
@@ -40,6 +40,15 @@ type VenueType = {
     id: number;
     founded: number;
     venue: VenueType;
+    team: {
+      id: number;
+      name: string; 
+      code: string;
+      country: string;
+      founded: number;
+      national: boolean;
+      logo: string;
+    }
   };
   
   type DataType = {
@@ -48,7 +57,13 @@ type VenueType = {
     };
   };
  
-  
+  const theme = createTheme({
+    palette: {
+        background: {
+            paper: '#B71515', // lfc read
+        },
+    },
+});
   
 const CardOneLFCTeamStats:React.FC= ():JSX.Element => {
     
@@ -104,26 +119,28 @@ const CardOneLFCTeamStats:React.FC= ():JSX.Element => {
       </>
     ) : (
       <>
-        { data && data.data1.response.map((team:TeamType) => (
-          <div className="card" key={team.id}>
+        { data && data.data1.response.map((team:TeamType, index:Key) => (
+            <div className="card" key={index}>
+              <ThemeProvider theme={theme}>
             <Card>
               <CardContent>
-            <h2>{team.name}</h2>
-            <img src={team.logo} alt="team logo" />
+            <h2>{team.team.name}</h2>
+            <img src={team.team.logo} alt="team logo" />
             </CardContent>
             <CardContent>
             <ul>
               <li>
-              Beautiful Historic Anfield
+    
                 <img src={(team.venue as { name: string, address: string, capacity: number, image: string }).image} />
-                <li>Founded: {team.founded}</li>
-                <li>Venue: {(team.venue as { name: string, address: string, capacity: number, image: string }).name}</li>
-                <li>Address: {(team.venue as { name: string, address: string, capacity: number, image: string }).address}</li>
-                <li>Capacity: {(team.venue as { name: string, address: string, capacity: number, image: string }).capacity}</li>
+                <li>Founded: {team.team.founded}</li>
+                <li>Venue: {(team.venue.name as unknown as { name: string, address: string, capacity: number, image: string }).name}</li>
+                <li>Address: {(team.venue.address as unknown as { name: string, address: string, capacity: number, image: string }).address}</li>
+                <li>Capacity: {(team.venue.capacity as unknown as { name: string, address: string, capacity: number, image: string }).capacity}</li>
               </li>
             </ul>
             </CardContent>
             </Card>
+            </ThemeProvider>
           </div>
         ))}
       </>

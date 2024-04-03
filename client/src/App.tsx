@@ -1,5 +1,3 @@
-
-import reactLogo from './assets/react.svg'
 import Lottie from 'react-lottie';
 import footieLottie from './footie.json';
 import football from './soccerball.json';
@@ -7,7 +5,6 @@ import './App.css'
 import CardOneLFCTeamStats from './Components/CardOne';
 import CardThree from './Components/CardThree';
 import CardTwo from './Components/CardTwo';
-import CardFour from './Components/CardFour';
 
 
 
@@ -54,16 +51,13 @@ const defaultOptions1 ={
         <a href="https://vitejs.dev" target="_blank">
          <Lottie options={defaultOptions1} height={400} width={400}/> 
         </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
       </div>
       <h1 className='head-title'>You Will Never Walk Alone</h1>
       
-       
+      <CardOneLFCTeamStats /> 
      
       <h2 className='card-title'>Squad Information </h2>
-        <CardOneLFCTeamStats /> 
+        
         
         <div>
         
@@ -83,11 +77,10 @@ const defaultOptions1 ={
     
     
      
-       <h2 className='card-title4'>Squads Stats</h2>
-       <CardFour />
+      
      
      <main>
-
+     
      </main>
     </div>
     </>
