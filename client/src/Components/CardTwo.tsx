@@ -117,9 +117,17 @@ return (
                         }) => (
                             <div className="player-row" key={p.id}>
                                 <span>
-                                    <div className="player-info">{p.name}</div>
-                                    <div className="player-info">{String(p.number)}</div>
-                                    <div className="player-info">{p.position}</div>
+                                    <Card>
+                                    <div className="player-info">
+                                        <CardContent>{p.name}</CardContent>
+                                        </div>
+                                    </Card>
+                                    <Card>
+                                    <div className="player-info"> <CardContent>{String(p.number)} </CardContent></div>
+                                    </Card>
+                                    <Card>
+                                    <div className="player-info"> <CardContent>{p.position} </CardContent></div>
+                                    </Card>
                                 </span>
                                 <img src={p.photo} alt="player photo" />
                             </div>
