@@ -1,4 +1,4 @@
-import Lottie from 'react-lottie';
+import Lottie from 'lottie-react';
 import footieLottie from './footie.json';
 import football from './soccerball.json';
 import './App.css'
@@ -36,22 +36,6 @@ export type AppProps = {
 
 function App() {
  
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: footieLottie,  
-  rendererSettings: {
-    preserveAspectRatio: 'xMidYMid slice'
-  }
-};
-const defaultOptions1 ={
-  loop: true,
-  autoplay: true,
-  animationData: football,  
-  rendererSettings: {
-    preserveAspectRatio: 'xMidYMid slice'
-  }
-}
 
 
 
@@ -61,10 +45,10 @@ const defaultOptions1 ={
     <div className='card-parent-container'>
       <div id='animation-container'>
 
-      <Lottie options={defaultOptions} height={400} width={400} />
+      <Lottie animationData={footieLottie} height={400} width={400} />
       </div>
       <div id='animation-container1'>
-      <Lottie options={defaultOptions1} height={400} width={400} />
+      <Lottie animationData={football} height={400} width={400} />
       </div>
       </div>
       <h1 className='head-title'>You Will Never Walk Alone</h1>
