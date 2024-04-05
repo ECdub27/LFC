@@ -12,7 +12,7 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));  
 app.use(cors({
-  origin: `${productionUrl}`,
+  origin: process.env.NODE_ENV === 'production' ? `${productionUrl}` : 'http://localhost:5173',
 }));
 app.options('*', cors());
 app.use(express.static(path.join(__dirname, 'public')));
