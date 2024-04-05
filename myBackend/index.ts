@@ -7,11 +7,13 @@ import asyncHandler from 'express-async-handler';
 config({ path: path.resolve(__dirname, 'sensitive.env') });
 const PORT = process.env.PORT || 3000;
 const api = process.env.API_KEY;
-
+const productionUrl = process.env.SERVER_URL;
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));  
-app.use(cors());
+app.use(cors({
+  origin: `${productionUrl}`,
+}));
 app.options('*', cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -22,11 +24,7 @@ const teamUrl = "https://v3.football.api-sports.io/"
 
 
 
-app.get('/', cors(), (_req, res) => {
-    res.send('Hello World!');
-    // for react app
- 
-});
+app.use(express.static('dist'))
 
 app.get("/cors", (_req, res) =>{
     res.send("CORS ENABLED");

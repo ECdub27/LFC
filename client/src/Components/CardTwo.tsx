@@ -119,14 +119,14 @@ return (
                                 <span>
                                     <Card>
                                     <div className="player-info">
-                                        <CardContent>{p.name}</CardContent>
+                                        {p.name}
                                         </div>
                                     </Card>
                                     <Card>
-                                    <div className="player-info"> <CardContent>{String(p.number)} </CardContent></div>
+                                    <div className="player-info"> {String(p.number)} </div>
                                     </Card>
                                     <Card>
-                                    <div className="player-info"> <CardContent>{p.position} </CardContent></div>
+                                    <div className="player-info">{p.position} </div>
                                     </Card>
                                 </span>
                                 <img src={p.photo} alt="player photo" />
