@@ -11,6 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
+tsconfig.tsbuildinfo
 
 # Editor directories and files
 .vscode/*
@@ -30,3 +31,4 @@ src/sensitive.env
 src/myBackend/package-lock.json
 
 sensitive.env
+!.env.local
