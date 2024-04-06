@@ -18,7 +18,7 @@ const CardTwo = () => {
     useEffect(() => {
         setIsLoading(true);
         setError(null);
-        fetch('http://localhost:3000/api/LFCPlayers/squads')
+        fetch(import.meta.env.VITE_BACKEND_URL + '/api/LFCPlayers/squads')
             .then(response => {
             if (response.ok) {
                 return response.json();
