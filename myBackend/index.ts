@@ -12,8 +12,16 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));  
 app.use(cors({
-  origin: process.env.NODE_ENV === 'production' ? `${productionUrl}` : 'http://localhost:5173',
+  origin: function (origin, callback) {
+    const allowedOrigins = ['http://localhost:5173', 'https://v3.football.api-sports.io/','http://localhost:4173'];
+    if (allowedOrigins.includes(origin as string)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  }
 }));
+console.log(process.env.NODE_ENV);
 app.options('*', cors());
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -24,7 +32,7 @@ const teamUrl = "https://v3.football.api-sports.io/"
 
 
 
-app.use(express.static('dist'))
+app.use(express.static(path.resolve(__dirname,'dist')));
 
 app.get("/cors", (_req, res) =>{
     res.send("CORS ENABLED");
