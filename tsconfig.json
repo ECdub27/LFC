@@ -5,7 +5,8 @@
       // add other compiler options as needed
     },
     "references": [
-      { "path": "./client/tsconfig.json", "disableReferencedProjectLoad": true },
+      
+      { "path": "./client/tsconfig.json" },
       { "path": "./myBackend/tsconfig.json" }
     ]
   }
